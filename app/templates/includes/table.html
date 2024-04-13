@@ -1,0 +1,27 @@
+    <table class="table table-striped">
+      <tr>
+        {% if is_index %}
+          <th>Файл</th><th>Дата загрузки</th><th>Кол-во слов</th>
+        {% else %}
+          <th>Слово</th><th>TF</th><th>IDF</th>
+        {% endif %}
+        
+      </tr>
+      {% if is_index %}
+        {% for file in page_obj %}
+        <tr>
+          <td><a href="{{ url_for('get_file_details', file_id=file.id) }}"> {{ file.name }}</a></td>
+          <td>{{ file.uploaded_at }}</td>
+          <td>{{ file.words_qty }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        {% for word in page_obj %}
+        <tr>
+          <td>{{ word.word }}</td>
+          <td>{{ word.tf }}</td>
+          <td>{{ word.word.idf }}</td>
+        </tr>
+        {% endfor %}
+      {% endif %}
+    </table>

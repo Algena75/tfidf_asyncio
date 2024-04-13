@@ -1,0 +1,27 @@
+<div class="card-header">
+          <h5 class="card-title">Добавить текстовый файл</h5>
+</div>
+    <div class="card-body">
+  <form method="POST" action="{{ url_for('upload_file') }}"  enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <div class="col-12">
+      <input type="file" name="file" class="form-control">
+    </div>
+    <div class="col-12">
+      <p></p>
+      <button type="submit" class="btn btn-primary">Добавить</button>
+    </div>
+  </form>
+  {% if messages %}
+  <div class="messages">
+  {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+      <span style="color:red">{{ message }}</span>
+    </div>
+  {% endfor %}
+  </div>
+  {% endif %}
+
+  <p class="py-1 mb-1">
+  </p>
+    </div>
