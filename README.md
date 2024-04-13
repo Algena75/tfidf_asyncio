@@ -1,10 +1,12 @@
 # Сервис расчёта TF/IDF
-Реализация сервиса загрузки текстового файла с расчётом индексов TF-IDF (от англ. TF — term frequency, IDF — inverse document frequency)
+Реализация асинхронного сервиса загрузки текстового файла с расчётом индексов TF-IDF (от англ. TF — term frequency, IDF — inverse document frequency)
 ## Автор:
 Алексей Наумов ( algena75@yandex.ru )
 ## Используемые технолологии:
-* Django
-* SQLite
+* FastAPI
+* PostgreSQL
+* Asyncio
+* SQLAlchemy
 * Bootstrap
 
 ## Как запустить проект:
@@ -12,11 +14,11 @@
 
 
 ```
-git clone git@github.com:Algena75/tfidf.git
+git clone git@github.com:Algena75/tfidf_asyncio.git
 ```
 
 ```
-cd tfidf
+cd tfidf_asyncio
 ```
 
 Cоздать и активировать виртуальное окружение:
@@ -46,26 +48,15 @@ python3 -m pip install --upgrade pip
 ```
 pip install -r requirements.txt
 ```
-## Автотесты:
-Для запуска тестов выполнить: 
-```
-python3 manage.py test
-```
-Проверка включает:
-- тестирование urls (статические страницы, редиректы, использование шаблонов)
-- тестирование models (корректная работа методов `__str__` и `save()`)
-- тестирование views (правильное отображение контекста для индекса при условии отображения файлов/слов, наличие формы)
-- тестирование forms (проверка записи текстового файла и не записи графического файла)
-- тестирование правильности расчётов индексов TF и IDF
 ## Как запустить проект локально:
-Перейти в директорию `tfidf` и выполнить миграции
+Выполнить миграции
 ```
-cd tfidf/ && python3 manage.py migrate
+alembic upgrade head
 ```
 запустить проект
 ```
-python3 manage.py runserver
+uvicorn app.main:app --reload
 ```
 открыть в браузере http://127.0.0.1:8000/
 ## Подготовка:
-Загрузить текстовые файлы.  В корне проекта помещены для тестирования файлы `test.txt`, `onemoretest.txt` и `bigtest.txt`.
+Загрузить текстовые файлы.  В корне проекта помещены для тестирования файлы `test.txt`, `onemoretest.txt` и `new_doc.txt`.
