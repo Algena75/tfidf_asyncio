@@ -8,19 +8,19 @@
       <input type="file" name="file" class="form-control">
     </div>
     <div class="col-12">
-      <p></p>
+      {% if messages %}
+      <div class="messages">
+      {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
+          <span style="color:red">{{ message }}</span>
+        </div>
+      {% endfor %}
+      </div>
+      {% endif %}
+          <p></p>
       <button type="submit" class="btn btn-primary">Добавить</button>
     </div>
   </form>
-  {% if messages %}
-  <div class="messages">
-  {% for message in messages %}
-    <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>
-      <span style="color:red">{{ message }}</span>
-    </div>
-  {% endfor %}
-  </div>
-  {% endif %}
 
   <p class="py-1 mb-1">
   </p>

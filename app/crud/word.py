@@ -1,15 +1,11 @@
-from random import choices
-import string
-from typing import Optional
 from math import log10
 
-from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select, func
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import ARRAY, UPLOAD_TO
 from app.crud.base import CRUDBase
-from app.models.models import File, WordFile, Word
+from app.models.models import File, Word, WordFile
+
 
 class CRUDWord(CRUDBase):
 
@@ -31,12 +27,8 @@ class CRUDWord(CRUDBase):
             word,
             session: AsyncSession
     ):
-        # docs_list = await session.execute(select(File))
-        # print(docs_list)
-        # docs_list = docs_list.scalars().all()
-        # print(docs_list)
         docs_qty = await session.scalar(func.count(File.id))
-        query = select(func.count()).where(WordFile.right_id==word.right_id)
+        query = select(func.count()).where(WordFile.right_id == word.right_id)
         result = await session.execute(query)
         word_docs_qty = result.scalar()
         idf_value = log10(docs_qty / word_docs_qty)

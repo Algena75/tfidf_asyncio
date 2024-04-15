@@ -1,15 +1,13 @@
-from random import choices
 import string
+from random import choices
 from typing import Optional
 
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import ARRAY, UPLOAD_TO
 from app.crud.base import CRUDBase
 from app.crud.word import word_crud
-
 from app.models.models import File, WordFile
 
 
@@ -51,8 +49,10 @@ class CRUDFile(CRUDBase):
                         freq[word] = 1
             word_file_list = []
             for req in freq:
-                word = await word_crud.get_or_create(word=req, session=session)
-                word_file = WordFile(left_id=file_obj.id, right_id=word.id, tf=float(freq.get(req) / word_counter))
+                word = await word_crud.get_or_create(word=req,
+                                                     session=session)
+                word_file = WordFile(left_id=file_obj.id, right_id=word.id,
+                                     tf=float(freq.get(req) / word_counter))
                 word_file_list.append(word_file)
             session.add_all(word_file_list)
             await session.commit()
